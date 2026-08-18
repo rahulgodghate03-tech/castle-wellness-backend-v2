@@ -36,7 +36,7 @@ const getAllPackages = async (req, res) => {
 // POST /api/admin/packages
 const createPackage = async (req, res) => {
   try {
-    const { business, title, therapyCount, price, isFeatured, sortOrder } = req.body;
+       const { business, title, therapyCount, price, discountPrice, isFeatured, sortOrder } = req.body;
 
     if (!business || !title || !therapyCount || !price) {
       return res.status(400).json({ success: false, message: "Business, title, therapyCount and price are required" });
@@ -47,7 +47,7 @@ const createPackage = async (req, res) => {
       await Package.updateMany({ business }, { $set: { isFeatured: false } });
     }
 
-    const pkg = await Package.create({ business, title, therapyCount, price, isFeatured, sortOrder });
+        const pkg = await Package.create({ business, title, therapyCount, price, isFeatured, sortOrder });
     res.status(201).json({ success: true, package: pkg });
   } catch (err) {
     res.status(500).json({ success: false, message: "Failed to create package", error: err.message });
@@ -66,7 +66,7 @@ const updatePackage = async (req, res) => {
       await Package.updateMany({ business: pkg.business, _id: { $ne: pkg._id } }, { $set: { isFeatured: false } });
     }
 
-    const fields = ["title", "therapyCount", "price", "isFeatured", "isActive", "sortOrder"];
+        const fields = ["title", "therapyCount", "price", "discountPrice", "isFeatured", "isActive", "sortOrder"];
     fields.forEach((field) => {
       if (req.body[field] !== undefined) pkg[field] = req.body[field];
     });

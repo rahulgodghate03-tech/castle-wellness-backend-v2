@@ -37,13 +37,13 @@ const getAllServices = async (req, res) => {
 // POST /api/admin/services
 const createService = async (req, res) => {
   try {
-    const { business, name, description, price, durationMinutes, sortOrder } = req.body;
+         const { business, name, description, price, discountPrice, durationMinutes, sortOrder } = req.body;
 
     if (!business || !name || !description || !price) {
       return res.status(400).json({ success: false, message: "Business, name, description and price are required" });
     }
 
-    const serviceData = { business, name, description, price, durationMinutes, sortOrder };
+       const serviceData = { business, name, description, price, discountPrice: discountPrice || null, durationMinutes, sortOrder };
 
     if (req.file) {
       serviceData.image = { url: req.file.path, publicId: req.file.filename };
@@ -67,7 +67,7 @@ const updateService = async (req, res) => {
       return res.status(404).json({ success: false, message: "Service not found" });
     }
 
-    const fields = ["name", "description", "price", "durationMinutes", "sortOrder", "isActive"];
+        const fields = ["name", "description", "price", "discountPrice", "durationMinutes", "sortOrder", "isActive"];
     fields.forEach((field) => {
       if (req.body[field] !== undefined) service[field] = req.body[field];
     });

@@ -7,6 +7,7 @@ const serviceSchema = new mongoose.Schema(
     slug: { type: String, required: true, lowercase: true },
     description: { type: String, required: true, trim: true },
     price: { type: Number, required: true, min: 0 },
+        discountPrice: { type: Number, default: null, min: 0 },
     durationMinutes: { type: Number, default: 60 },
     image: {
       url: { type: String, default: "" },
